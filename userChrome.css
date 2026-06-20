@@ -24,43 +24,25 @@
 	--toolbar-field-focus-border-color: transparent !important;
 }
 
-/* --- GENERAL DEBLOAT ---------------------------------- */
-
-/* Bottom left page loading status or url preview */
 #statuspanel { display: none !important; }
-
-/* remove radius from right-click popup */
 menupopup, panel { --panel-border-radius: 0px !important; }
 menu, menuitem, menucaption { border-radius: 0px !important; }
-
-/* no stupid large buttons in right-click menu */
 menupopup > #context-navigation { display: none !important; }
 menupopup > #context-sep-navigation { display: none !important; }
 
-/* --- DEBLOAT NAVBAR ----------------------------------- */
-
-/* #back-button { display: none; } */
-/* #forward-button { display: none; } */
-/* #reload-button { display: none; } */
 #stop-button { display: none; }
 #home-button { display: none; }
 #library-button { display: none; }
-/* #fxa-toolbar-menu-button { display: none; } */
-/* empty space before and after the url bar */
+
 #customizableui-special-spring1, #customizableui-special-spring2 { display: none; }
 .private-browsing-indicator-with-label { display: none; }
 
-/* --- STYLE NAVBAR ------------------------------------ */
-
-/* remove padding between toolbar buttons */
 toolbar .toolbarbutton-1 { padding: 0 0 !important; }
 
-/* add it back to the downloads button, otherwise it's too close to the urlbar */
 #downloads-button {
 	margin-left: 2px !important;
 }
 
-/* add padding to the right of the last button so that it doesn't touch the edge of the window */
 #PanelUI-menu-button {
 	padding: 0px 4px 0px 0px !important;
 }
@@ -101,14 +83,10 @@ toolbar .toolbarbutton-1 { padding: 0 0 !important; }
 #unified-extensions-panel { margin-top: 3px !important; }
 #appMenu-popup { margin-top: 3px !important; }
 
-/* --- UNIFIED EXTENSIONS BUTTON ------------------------ */
-
-/* make extension icons smaller */
 #unified-extensions-view {
 	--uei-icon-size: 16px;
 }
 
-/* hide bloat */
 .unified-extensions-item-message-deck,
 #unified-extensions-view > .panel-header,
 #unified-extensions-view > toolbarseparator,
@@ -116,7 +94,6 @@ toolbar .toolbarbutton-1 { padding: 0 0 !important; }
 	display: none !important;
 }
 
-/* add 3px padding on the top and the bottom of the box */
 .panel-subview-body {
 	padding: 3px 0px !important;
 }
@@ -139,7 +116,6 @@ toolbar .toolbarbutton-1 { padding: 0 0 !important; }
 	padding: 4px !important;
 }
 
-/* --- QUICK BOOKMARK POPUP ----------------------------- */
 
 menupopup, panel { &::part(content) { height: auto !important; } }
 
@@ -151,7 +127,6 @@ menupopup, panel { &::part(content) { height: auto !important; } }
 	display: none !important;
 }
 
-/* --- DEBLOAT URLBAR ----------------------------------- */
 
 #pageActionButton { display: none; }
 #pocket-button { display: none; }
@@ -163,7 +138,6 @@ menupopup, panel { &::part(content) { height: auto !important; } }
 #urlbar-searchmode-switcher { display: none; }
 #searchmode-switcher-chicklet { display: none !important; }
 
-/* hide container indicators; we indicate container by changing tab title text color */
 #identity-icon-box {
 	margin-inline-end: 0 !important;
 	padding: 0 4px !important;
@@ -172,13 +146,10 @@ menupopup, panel { &::part(content) { height: auto !important; } }
 	display: none !important;
 }
 
-/* Go to arrow button at the end of the urlbar when searching */
 #urlbar-go-button { display: none; }
 
 /* remove container indicator from urlbar */
 #userContext-label, #userContext-indicator { display: none !important;}
-
-/* --- STYLE TAB TOOLBAR -------------------------------- */
 
 #titlebar {
 	--proton-tab-block-margin: 0px !important;
@@ -190,7 +161,6 @@ menupopup, panel { &::part(content) { height: auto !important; } }
 	font-size: 14px !important;
 }
 
-/* Change color of normal tabs */
 tab:not([selected="true"]) {
 	background-color: var(--tab-inactive-bg-color) !important;
 	color: var(--identity-icon-color, var(--tab-inactive-fg-fallback-color)) !important;
@@ -222,8 +192,6 @@ tab {
 /* Hide close button on tabs */
 #tabbrowser-tabs .tabbrowser-tab .tab-close-button { display: none !important; }
 
-/* disable favicons in tab */
-/* .tab-icon-stack:not([pinned]):not([busy]) { display: none !important; } */
 
 .tabbrowser-tab {
 	/* remove border between tabs */
@@ -310,8 +278,6 @@ tab {
 :root[inFullscreen] > body > #browser {
 	margin-top: 0 !important;
 }
-
-/* --- AUTOHIDE NAVBAR ---------------------------------- */
 
 :root {
 	--uc-navbar-transform: calc(0px - var(--urlbar-height-setting));
