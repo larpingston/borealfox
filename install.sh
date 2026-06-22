@@ -93,7 +93,7 @@ rm -f "$PROFILE_DIR/sessionstore-backups"/previous.jsonlz4
 rm -f "$PROFILE_DIR/sessionstore-backups"/recovery.baklz4
 
 "$FIREFOX_PATH" "file://$REPO_DIR/patches/splash.html" &
-sleep 20
+sleep 12
 
 pkill -f firefox || true
 sleep 1
