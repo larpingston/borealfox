@@ -80,6 +80,9 @@ cp "$REPO_DIR/patches/user.js" "$PROFILE_DIR/user.js"
 
 mkdir -p "$PROFILE_DIR/chrome"
 cp "$REPO_DIR/patches/userChrome.css" "$PROFILE_DIR/chrome/userChrome.css"
+if [ -f "$REPO_DIR/patches/logo.png" ]; then
+  cp "$REPO_DIR/patches/logo.png" "$PROFILE_DIR/chrome/logo.png"
+fi
 
 sudo mkdir -p "$FIREFOX_DIR/distribution"
 sudo cp "$REPO_DIR/distribution/policies.json" "$FIREFOX_DIR/distribution/policies.json"

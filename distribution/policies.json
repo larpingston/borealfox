@@ -11,29 +11,35 @@
         "DisablePocket": true,
         "DisableSetDesktopBackground": false,
         "DisableDeveloperTools": false,
+        "DisableFirefoxAccounts": true,
+        "OfferToSaveLogins": false,
+        "PasswordManagerEnabled": false,
+        "SearchSuggestEnabled": false,
+        "CaptivePortal": false,
         "NoDefaultBookmarks": true,
+        "NewTabPage": false,
         "SSLVersionMin": "tls1.2",
         "EnableTrackingProtection": {
             "Value": true,
             "Cryptomining": true,
             "Fingerprinting": true,
-            "EmailTracking": true,
-            "Exceptions": ["https://netflix.com"]
+            "EmailTracking": true
         },
         "NetworkPrediction": false,
         "PostQuantumKeyAgreementEnabled": true,
         "ExtensionSettings": {
             "uBlock0@raymondhill.net": {
                 "installation_mode": "force_installed",
-                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
+                "default_area": "navbar"
+            },
+            "{b86e4813-687a-43e6-ab65-0bde4ab75758}": {
+                "installation_mode": "force_installed",
+                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/localcdn-fork-of-decentraleyes/latest.xpi"
             },
             "{f2b832a9-f0f5-4532-934c-74b25eb23fb9}": {
                 "installation_mode": "force_installed",
                 "install_url": "https://addons.mozilla.org/firefox/downloads/latest/matte-black-v1/latest.xpi"
-            },
-            "extension@tabliss-maintained": {
-                "installation_mode": "force_installed",
-                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/tablissng/latest.xpi"
             }
         },
         "UserMessaging": {
@@ -41,7 +47,18 @@
             "FeatureRecommendations": false,
             "UrlbarInterventions": false,
             "SkipOnboarding": true,
-            "WhatsNew": false
+            "WhatsNew": false,
+            "MoreFromMozilla": false
+        },
+        "FirefoxHome": {
+            "Search": false,
+            "TopSites": false,
+            "SponsoredTopSites": false,
+            "Highlights": false,
+            "Pocket": false,
+            "SponsoredPocket": false,
+            "Snippets": false,
+            "Locked": true
         },
         "SearchEngines": {
             "Add": [
@@ -76,7 +93,9 @@
                 "Yahoo",
                 "Amazon.com",
                 "eBay",
-                "Twitter"
+                "Twitter",
+                "Perplexity",
+                "Wikipedia (en)"
             ]
         }
     }
