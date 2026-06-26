@@ -1,0 +1,110 @@
+{
+    "policies": {
+        "AppUpdateURL": "https://localhost",
+        "OverridePostUpdatePage": "",
+        "DisableAppUpdate": true,
+        "DisableSystemAddonUpdate": true,
+        "DisableProfileImport": false,
+        "DisableFirefoxStudies": true,
+        "DisableTelemetry": true,
+        "DisableFeedbackCommands": true,
+        "DisablePocket": true,
+        "DisableSetDesktopBackground": false,
+        "DisableDeveloperTools": false,
+        "DisableFirefoxAccounts": true,
+        "OfferToSaveLogins": false,
+        "PasswordManagerEnabled": false,
+        "SearchSuggestEnabled": false,
+        "CaptivePortal": false,
+        "NoDefaultBookmarks": true,
+        "NewTabPage": false,
+        "SSLVersionMin": "tls1.2",
+        "EnableTrackingProtection": {
+            "Value": true,
+            "Cryptomining": true,
+            "Fingerprinting": true,
+            "EmailTracking": true
+        },
+        "NetworkPrediction": false,
+        "PostQuantumKeyAgreementEnabled": true,
+        "ExtensionSettings": {
+            "uBlock0@raymondhill.net": {
+                "installation_mode": "force_installed",
+                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+            },
+            "{d7742d87-e61d-4b78-b8a1-b469842139fa}": {
+                "installation_mode": "force_installed",
+                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi",
+                "default_area": "navbar"
+            },
+            "{b86e4813-687a-43e6-ab65-0bde4ab75758}": {
+                "installation_mode": "force_installed",
+                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/localcdn-fork-of-decentraleyes/latest.xpi"
+            },
+            "addon@darkreader.org": {
+                "installation_mode": "force_installed",
+                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi"
+            },
+            "{f2b832a9-f0f5-4532-934c-74b25eb23fb9}": {
+                "installation_mode": "force_installed",
+                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/matte-black-v1/latest.xpi"
+            }
+        },
+        "UserMessaging": {
+            "ExtensionRecommendations": false,
+            "FeatureRecommendations": false,
+            "UrlbarInterventions": false,
+            "SkipOnboarding": true,
+            "WhatsNew": false,
+            "MoreFromMozilla": false
+        },
+        "FirefoxHome": {
+            "Search": false,
+            "TopSites": false,
+            "SponsoredTopSites": false,
+            "Highlights": false,
+            "Pocket": false,
+            "SponsoredPocket": false,
+            "Snippets": false,
+            "Locked": true
+        },
+        "SearchEngines": {
+            "Add": [
+                {
+                    "Name": "Searx.be",
+                    "URLTemplate": "https://searx.be/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://searx.be/favicon.ico",
+                    "Alias": "@searx"
+                },
+                {
+                    "Name": "Startpage",
+                    "URLTemplate": "https://www.startpage.com/sp/search?query={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://www.startpage.com/favicon.ico",
+                    "Alias": "@startpage"
+                },
+                {
+                    "Name": "Brave Search",
+                    "URLTemplate": "https://search.brave.com/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://cdn.search.brave.com/serp/v2/_app/assets/img/brave-favicon.png",
+                    "Alias": "@brave"
+                }
+            ],
+            "Default": "DuckDuckGo",
+            "DefaultPrivate": "DuckDuckGo",
+            "PreventInstalls": false,
+            "Remove": [
+                "Google",
+                "Bing",
+                "Yahoo",
+                "Amazon.com",
+                "eBay",
+                "Twitter",
+                "Perplexity",
+                "Wikipedia (en)"
+            ]
+        }
+    }
+}

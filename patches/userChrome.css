@@ -1,0 +1,42 @@
+:root {
+  --tab-border-radius: 0px !important;
+  --tab-block-margin: 0px !important;
+  --tab-min-height: 32px !important;
+  --tab-line-color: #0a84ff;
+}
+
+.tab-background {
+  border-radius: var(--tab-border-radius) !important;
+  margin-block: var(--tab-block-margin) !important;
+  margin-inline: 0px !important;
+  box-shadow: none !important;
+}
+
+.tabbrowser-tab {
+  padding-inline: 0px !important;
+}
+
+.tab-background[selected="true"] {
+  background-color: var(--toolbar-bgcolor) !important;
+  background-image: none !important;
+}
+
+.tabbrowser-tab[selected="true"] .tab-background {
+  border-top: 2px solid var(--tab-line-color, #0a84ff) !important;
+}
+
+.tab-line {
+  display: none !important;
+}
+
+#TabsToolbar {
+  padding-block: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+#navigator-toolbox {
+  border-bottom: none !important;
+}
+.tabbrowser-tab[label="New Tab"] .tab-icon-image {
+  display: none !important;
+}

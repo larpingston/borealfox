@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>borealfox settings</title>
+<style>
+body { font-family: monospace; font-size: 13px; margin: 48px; background: #fff; color: #000; }
+h1 { font-size: 14px; font-weight: normal; margin: 0 0 32px 0; }
+h2 { font-size: 11px; font-weight: normal; color: #999; margin: 24px 0 8px 0; }
+.grid { display: flex; gap: 64px; max-width: 960px; }
+.col { flex: 1; min-width: 0; }
+.section { margin-bottom: 32px; }
+.row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px; }
+.sub { margin-left: 16px; }
+.label { display: flex; align-items: center; gap: 6px; }
+input[type="checkbox"] { width: 14px; height: 14px; cursor: pointer; flex-shrink: 0; }
+input[type="color"] { width: 40px; height: 20px; border: 1px solid #ccc; padding: 1px; cursor: pointer; background: none; flex-shrink: 0; }
+#color_row { display: none; }
+footer { margin-top: 32px; font-size: 11px; color: #999; max-width: 960px; }
+button { font-family: monospace; font-size: 11px; padding: 6px 14px; margin-top: 8px; background: #eee; color: #000; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; }
+button:disabled { background: #e0e0e0; color: #888; }
+.readme { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #666; line-height: 1.6; font-size: 11px; }
+.readme strong { color: #000; font-weight: normal; font-size: 12px; }
+
+.tip { position: relative; display: inline-block; color: #999; font-size: 10px; cursor: default; user-select: none; }
+.tip:hover { color: #000; }
+.tip .tiptext {
+    display: none;
+    position: absolute;
+    left: 20px;
+    top: -4px;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 6px 9px;
+    font-size: 11px;
+    line-height: 1.5;
+    width: 240px;
+    z-index: 10;
+    color: #000;
+    white-space: normal;
+}
+.tip:hover .tiptext { display: block; }
+</style>
+</head>
+<body>
+
+<h1>welcome to borealfox, heres some stuff you may want to configure (you can reopen this page by running "borealfox-settings" in your terminal)</h1>
+
+<div class="grid">
+
+<div class="col">
+
+<div class="section">
+<h2>security and privacy</h2>
+<div class="row">
+    <div class="label"><span>force https</span><span class="tip">[?]<span class="tiptext">blocks all plain http connections and upgrades them to https. sites without https support will fail to load.</span></span></div>
+    <input type="checkbox" id="https_only" data-pref="dom.security.https_only_mode">
+</div>
+<div class="row">
+    <div class="label"><span>resist fingerprinting</span><span class="tip">[?]<span class="tiptext">makes your browser report generic values for screen size, timezone, fonts and other signals trackers use to identify you across sites.</span></span></div>
+    <input type="checkbox" id="rfp" data-pref="privacy.resistFingerprinting">
+</div>
+<div class="row sub">
+    <div class="label"><span>enable letterboxing</span><span class="tip">[?]<span class="tiptext">forces the page viewport to generic dimensions by adding gray borders, preventing trackers from fingerprinting your exact screen size.</span></span></div>
+    <input type="checkbox" id="letterbox" data-pref="privacy.resistFingerprinting.letterboxing">
+</div>
+<div class="row">
+    <div class="label"><span>first-party isolation</span><span class="tip">[?]<span class="tiptext">strictly isolates cookies and cache to the domain in the url bar, preventing cross-site tracking.</span></span></div>
+    <input type="checkbox" id="fpi" data-pref="privacy.firstparty.isolate">
+</div>
+<div class="row">
+    <div class="label"><span>global privacy control</span><span class="tip">[?]<span class="tiptext">sends a gpc signal to every site telling them not to sell or share your data. legally binding in some jurisdictions.</span></span></div>
+    <input type="checkbox" id="gpc" data-pref="privacy.globalprivacycontrol.enabled">
+</div>
+<div class="row">
+    <div class="label"><span>disable webrtc</span><span class="tip">[?]<span class="tiptext">webrtc can expose your real ip address even through a vpn. disabling it prevents this leak. breaks video calling apps like google meet.</span></span></div>
+    <input type="checkbox" id="webrtc" data-pref="media.peerconnection.enabled" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable drm</span><span class="tip">[?]<span class="tiptext">removes widevine and eme. drm is proprietary software with no auditable source code running in your browser.</span></span></div>
+    <input type="checkbox" id="drm" data-pref="media.eme.enabled" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable webgl</span><span class="tip">[?]<span class="tiptext">removes hardware 3d graphics access. highly fingerprintable. breaks complex browser games and some 3d map sites.</span></span></div>
+    <input type="checkbox" id="webgl" data-pref="webgl.disabled">
+</div>
+<div class="row">
+    <div class="label"><span>dns over https (mullvad)</span><span class="tip">[?]<span class="tiptext">encrypts your dns queries and routes them through mullvad's ad-blocking resolver instead of your isp. prevents dns-level tracking.</span></span></div>
+    <input type="checkbox" id="doh" data-pref="network.trr.mode" data-type="int" data-on="3" data-off="0">
+</div>
+<div class="row">
+    <div class="label"><span>tracking protection</span></div>
+    <input type="checkbox" id="tracking" data-pref="privacy.trackingprotection.enabled">
+</div>
+<div class="row">
+    <div class="label"><span>social tracking protection</span><span class="tip">[?]<span class="tiptext">blocks facebook, twitter and other social media trackers embedded on third-party sites.</span></span></div>
+    <input type="checkbox" id="social" data-pref="privacy.trackingprotection.socialtracking.enabled">
+</div>
+<div class="row">
+    <div class="label"><span>block cryptomining</span><span class="tip">[?]<span class="tiptext">prevents websites from using your cpu to mine cryptocurrency without your knowledge.</span></span></div>
+    <input type="checkbox" id="crypto" data-pref="privacy.trackingprotection.cryptomining.enabled">
+</div>
+<div class="row">
+    <div class="label"><span>bounce tracking protection</span><span class="tip">[?]<span class="tiptext">detects and clears state from redirect-based tracking where you are briefly sent through a tracking domain before reaching your destination.</span></span></div>
+    <input type="checkbox" id="bounce" data-pref="privacy.bounceTrackingProtection.mode" data-type="int" data-on="1" data-off="0">
+</div>
+<div class="row">
+    <div class="label"><span>strip tracking parameters from urls</span><span class="tip">[?]<span class="tiptext">removes utm_ and other tracking parameters appended to urls when you click links.</span></span></div>
+    <input type="checkbox" id="strip" data-pref="privacy.query_stripping.enabled">
+</div>
+<div class="row">
+    <div class="label"><span>disable geolocation</span></div>
+    <input type="checkbox" id="geo" data-pref="geo.enabled" data-invert="true">
+</div>
+</div>
+
+<div class="section">
+<h2>media and ui</h2>
+<div class="row">
+    <div class="label"><span>block autoplay</span></div>
+    <input type="checkbox" id="autoplay" data-pref="media.autoplay.default" data-type="int" data-on="5" data-off="0">
+</div>
+<div class="row">
+    <div class="label"><span>disable pdf scripting</span><span class="tip">[?]<span class="tiptext">prevents javascript embedded in pdf files from executing when opened in the browser.</span></span></div>
+    <input type="checkbox" id="pdfjs" data-pref="pdfjs.enableScripting" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable smooth scrolling</span><span class="tip">[?]<span class="tiptext">disables modern scroll animation. page jumps instantly like it did in 1999. highly responsive.</span></span></div>
+    <input type="checkbox" id="smooth" data-pref="general.smoothScroll" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>use userchrome.css ui</span><span class="tip">[?]<span class="tiptext">applies the borealfox custom chrome stylesheet. gives tabs a flat square look with a colored top border on the active tab.</span></span></div>
+    <input type="checkbox" id="chrome_enabled">
+</div>
+<div class="row sub" id="color_row">
+    <div class="label"><span>selected tab color</span></div>
+    <input type="color" id="tab_color" value="#0a84ff">
+</div>
+</div>
+
+<div style="margin-top: 32px;">
+    <button id="restart_btn">save and restart</button>
+</div>
+
+</div>
+<div class="col">
+
+<div class="section">
+<h2>network</h2>
+<div class="row">
+    <div class="label"><span>disable ipv6</span><span class="tip">[?]<span class="tiptext">forces the browser to use legacy ipv4. can prevent routing leaks if your vpn does not handle ipv6 correctly.</span></span></div>
+    <input type="checkbox" id="ipv6" data-pref="network.dns.disableIPv6">
+</div>
+<div class="row">
+    <div class="label"><span>disable dns prefetch</span><span class="tip">[?]<span class="tiptext">stops firefox from resolving dns for links on a page before you click them. reduces latency but leaks which links you might click.</span></span></div>
+    <input type="checkbox" id="dnspre" data-pref="network.dns.disablePrefetch">
+</div>
+<div class="row">
+    <div class="label"><span>disable speculative connections</span><span class="tip">[?]<span class="tiptext">stops firefox from opening tcp connections to servers before you actually click a link.</span></span></div>
+    <input type="checkbox" id="speccon" data-pref="network.http.speculative-parallel-limit" data-type="int" data-on="0" data-off="6">
+</div>
+<div class="row">
+    <div class="label"><span>disable link prefetch</span></div>
+    <input type="checkbox" id="prefetch" data-pref="network.prefetch-next" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable captive portal detection</span><span class="tip">[?]<span class="tiptext">stops firefox from pinging mozilla servers to check if you are behind a captive portal (hotel/airport wifi login pages).</span></span></div>
+    <input type="checkbox" id="captive" data-pref="network.captive-portal-detection.enabled" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>show punycode domains</span><span class="tip">[?]<span class="tiptext">shows the raw punycode form of internationalized domain names (e.g. xn--). helps spot homograph phishing attacks.</span></span></div>
+    <input type="checkbox" id="puny" data-pref="network.IDN_show_punycode">
+</div>
+</div>
+
+<div class="section">
+<h2>telemetry and bloat</h2>
+<div class="row">
+    <div class="label"><span>disable telemetry</span></div>
+    <input type="checkbox" id="telem" data-pref="toolkit.telemetry.unified" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable normandy studies</span><span class="tip">[?]<span class="tiptext">normandy is mozilla's remote experimentation system. it can push studies and feature changes to your browser without your explicit consent.</span></span></div>
+    <input type="checkbox" id="norm" data-pref="app.normandy.enabled" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable pocket</span></div>
+    <input type="checkbox" id="pocket" data-pref="extensions.pocket.enabled" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable firefox accounts</span></div>
+    <input type="checkbox" id="sync" data-pref="identity.fxaccounts.enabled" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable ai features</span></div>
+    <input type="checkbox" id="ai" data-pref="browser.ml.enable" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable safe browsing</span><span class="tip">[?]<span class="tiptext">safe browsing sends url hashes to google to check for malware. disabling it improves privacy but removes that layer of protection.</span></span></div>
+    <input type="checkbox" id="sb" data-pref="browser.safebrowsing.malware.enabled" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable crash reports</span></div>
+    <input type="checkbox" id="crash" data-pref="browser.tabs.crashReporting.sendReport" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable service workers</span><span class="tip">[?]<span class="tiptext">prevents sites from installing background workers. blocks push notifications and offline web apps.</span></span></div>
+    <input type="checkbox" id="sw" data-pref="dom.serviceWorkers.enabled" data-invert="true">
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script>
+const toggles = document.querySelectorAll('input[type="checkbox"][data-pref]');
+
+fetch('/api/settings').then(r => r.json()).then(prefs => {
+    toggles.forEach(t => {
+        const pref = t.dataset.pref;
+        if (!(pref in prefs)) return;
+        t.checked = t.dataset.type === 'int'
+            ? prefs[pref] === parseInt(t.dataset.on)
+            : t.dataset.invert === 'true' ? !prefs[pref] : prefs[pref];
+    });
+});
+
+toggles.forEach(t => {
+    t.addEventListener('change', function() {
+        const value = this.dataset.type === 'int'
+            ? (this.checked ? parseInt(this.dataset.on) : parseInt(this.dataset.off))
+            : (this.dataset.invert === 'true' ? !this.checked : this.checked);
+        fetch('/api/settings', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({pref: this.dataset.pref, value})
+        });
+    });
+});
+
+const chromeToggle = document.getElementById('chrome_enabled');
+const colorRow = document.getElementById('color_row');
+const colorPicker = document.getElementById('tab_color');
+
+fetch('/api/chrome').then(r => r.json()).then(data => {
+    chromeToggle.checked = data.enabled;
+    colorPicker.value = data.tab_color;
+    colorRow.style.display = data.enabled ? 'flex' : 'none';
+});
+
+chromeToggle.addEventListener('change', function() {
+    colorRow.style.display = this.checked ? 'flex' : 'none';
+    fetch('/api/chrome', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({enabled: this.checked})
+    });
+});
+
+colorPicker.addEventListener('input', function() {
+    fetch('/api/chrome', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({tab_color: this.value})
+    });
+});
+
+document.getElementById('restart_btn').addEventListener('click', function() {
+    this.textContent = 'restarting...';
+    this.disabled = true;
+    fetch('/api/restart', {method: 'POST'});
+});
+</script>
+
+</body>
+</html>
