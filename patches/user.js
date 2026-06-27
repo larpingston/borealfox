@@ -7,6 +7,7 @@ user_pref("browser.xul.error_pages.expert_bad_cert", true);
 
 user_pref("network.captive-portal-detection.enabled", false);
 user_pref("network.connectivity-service.enabled", false);
+user_pref("network.dns.disableIPv6", true);
 user_pref("network.http.speculative-parallel-limit", 0);
 user_pref("network.dns.disablePrefetch", true);
 user_pref("network.dns.disablePrefetchFromHTTPS", true);
@@ -25,11 +26,19 @@ user_pref("network.cookie.cookieBehavior", 5);
 user_pref("network.cookie.cookieBehavior.pbmode", 5);
 
 user_pref("privacy.globalprivacycontrol.enabled", true);
+user_pref("privacy.sanitize.sanitizeOnShutdown", true);
 user_pref("privacy.antitracking.isolateContentScriptResources", true);
 user_pref("privacy.history.custom", true);
+user_pref("privacy.clearOnShutdown.history", true);
+user_pref("privacy.clearOnShutdown.downloads", true);
+user_pref("privacy.clearOnShutdown.cookies", false);
+user_pref("privacy.clearOnShutdown.cache", false);
+user_pref("privacy.clearOnShutdown.sessions", false);
+user_pref("privacy.clearOnShutdown.offlineApps", false);
+user_pref("privacy.clearOnShutdown.siteSettings", false);
 user_pref("privacy.userContext.enabled", true);
 user_pref("privacy.userContext.ui.enabled", true);
-user_pref("privacy.resistFingerprinting", true);
+user_pref("privacy.resistFingerprinting", false);
 user_pref("privacy.fingerprintingProtection", true);
 user_pref("privacy.trackingprotection.enabled", true);
 user_pref("privacy.trackingprotection.pbmode.enabled", true);
@@ -107,6 +116,7 @@ user_pref("browser.region.update.enabled", false);
 user_pref("browser.region.network.url", "");
 
 user_pref("extensions.enabledScopes", 5);
+user_pref("extensions.autoDisableScopes", 0);
 user_pref("extensions.update.enabled", false);
 user_pref("extensions.update.autoUpdateDefault", false);
 user_pref("extensions.blocklist.enabled", false);
@@ -195,7 +205,7 @@ user_pref("media.gmp-widevinecdm.visible", false);
 user_pref("media.gmp-gmpopenh264.enabled", false);
 user_pref("media.gmp-manager.url", "");
 user_pref("media.gmp-manager.url.override", "data:text/plain,");
-user_pref("media.autoplay.default", 5);
+user_pref("media.autoplay.default", 0);
 user_pref("media.autoplay.blocking_policy", 2);
 
 user_pref("browser.ai.control.default", "blocked");

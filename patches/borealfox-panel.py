@@ -7,6 +7,7 @@ import re
 import subprocess
 import socket
 import time
+import shutil
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import webbrowser
 
@@ -190,6 +191,26 @@ class BorealfoxHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(b'{"status":"restarting"}')
             restart_firefox()
+
+        elif self.path == '/api/panic':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(b'{"status":"panicking"}')
+            
+            subprocess.run(["pkill", "-f", "firefox"])
+            time.sleep(1)
+            
+            keep = ["user.js", "chrome", "extensions"]
+            for item in glob.glob(os.path.join(PROFILE_DIR, "*")):
+                if os.path.basename(item) not in keep:
+                    if os.path.isdir(item):
+                        shutil.rmtree(item, ignore_errors=True)
+                    else:
+                        try: os.remove(item)
+                        except: pass
+            
+            subprocess.Popen(["firefox", f"http://localhost:{PORT}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
         else:
             self.send_response(404)

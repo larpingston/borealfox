@@ -57,8 +57,14 @@ button:disabled { background: #e0e0e0; color: #888; }
     <input type="checkbox" id="https_only" data-pref="dom.security.https_only_mode">
 </div>
 <div class="row">
-    <div class="label"><span>resist fingerprinting</span><span class="tip">[?]<span class="tiptext">makes your browser report generic values for screen size, timezone, fonts and other signals trackers use to identify you across sites.</span></span></div>
-    <input type="checkbox" id="rfp" data-pref="privacy.resistFingerprinting">
+    <div class="label"><span>fingerprinting protection</span><span class="tip">[?]<span class="tiptext">standard blocks known scripts. aggressive (tor-level) spoofs hardware but breaks some sites.</span></span></div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+        <select id="fp_level" style="font-family: monospace; font-size: 11px; padding: 2px; background: none; border: 1px solid #ccc; cursor: pointer; display: none;">
+            <option value="standard">standard</option>
+            <option value="aggressive">aggressive</option>
+        </select>
+        <input type="checkbox" id="fp_toggle">
+    </div>
 </div>
 <div class="row sub">
     <div class="label"><span>enable letterboxing</span><span class="tip">[?]<span class="tiptext">forces the page viewport to generic dimensions by adding gray borders, preventing trackers from fingerprinting your exact screen size.</span></span></div>
@@ -85,8 +91,16 @@ button:disabled { background: #e0e0e0; color: #888; }
     <input type="checkbox" id="webgl" data-pref="webgl.disabled">
 </div>
 <div class="row">
-    <div class="label"><span>dns over https (mullvad)</span><span class="tip">[?]<span class="tiptext">encrypts your dns queries and routes them through mullvad's ad-blocking resolver instead of your isp. prevents dns-level tracking.</span></span></div>
-    <input type="checkbox" id="doh" data-pref="network.trr.mode" data-type="int" data-on="3" data-off="0">
+    <div class="label"><span>dns over https</span><span class="tip">[?]<span class="tiptext">encrypts your dns queries and routes them through a trusted provider.</span></span></div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+        <select id="dns_provider" style="font-family: monospace; font-size: 11px; padding: 2px; background: none; border: 1px solid #ccc; cursor: pointer; display: none;">
+            <option value="https://adblock.dns.mullvad.net/dns-query">mullvad (adblock)</option>
+            <option value="https://dns.mullvad.net/dns-query">mullvad (regular)</option>
+            <option value="https://dns.quad9.net/dns-query">quad9</option>
+            <option value="https://doh.libredns.gr/dns-query">libredns</option>
+        </select>
+        <input type="checkbox" id="dns_toggle">
+    </div>
 </div>
 <div class="row">
     <div class="label"><span>tracking protection</span></div>
@@ -107,6 +121,34 @@ button:disabled { background: #e0e0e0; color: #888; }
 <div class="row">
     <div class="label"><span>strip tracking parameters from urls</span><span class="tip">[?]<span class="tiptext">removes utm_ and other tracking parameters appended to urls when you click links.</span></span></div>
     <input type="checkbox" id="strip" data-pref="privacy.query_stripping.enabled">
+</div>
+<div class="row" style="margin-top: 16px;">
+    <div class="label"><span>clear selected data on close</span><span class="tip">[?]<span class="tiptext">automatically wipes selected data every time you close firefox.</span></span></div>
+    <input type="checkbox" id="clear_hist" data-pref="privacy.sanitize.sanitizeOnShutdown">
+</div>
+<div class="row sub">
+    <div class="label"><span>history</span></div>
+    <input type="checkbox" id="clear_sub_hist" data-pref="privacy.clearOnShutdown.history">
+</div>
+<div class="row sub">
+    <div class="label"><span>downloads</span></div>
+    <input type="checkbox" id="clear_sub_dl" data-pref="privacy.clearOnShutdown.downloads">
+</div>
+<div class="row sub">
+    <div class="label"><span>cookies and site data</span></div>
+    <input type="checkbox" id="clear_sub_cookies" data-pref="privacy.clearOnShutdown.cookies">
+</div>
+<div class="row sub" style="margin-bottom: 16px;">
+    <div class="label"><span>site settings</span></div>
+    <input type="checkbox" id="clear_sub_settings" data-pref="privacy.clearOnShutdown.siteSettings">
+</div>
+<div class="row">
+    <div class="label"><span>disable search and form history</span><span class="tip">[?]<span class="tiptext">stops firefox from remembering what you type into search bars and web forms.</span></span></div>
+    <input type="checkbox" id="no_formfill" data-pref="browser.formfill.enable" data-invert="true">
+</div>
+<div class="row">
+    <div class="label"><span>disable search suggestions</span><span class="tip">[?]<span class="tiptext">stops firefox from sending every keystroke in the url bar to your search engine.</span></span></div>
+    <input type="checkbox" id="no_suggest" data-pref="browser.search.suggest.enabled" data-invert="true">
 </div>
 <div class="row">
     <div class="label"><span>disable geolocation</span></div>
@@ -138,8 +180,9 @@ button:disabled { background: #e0e0e0; color: #888; }
 </div>
 </div>
 
-<div style="margin-top: 32px;">
+<div style="margin-top: 32px; display: flex; gap: 16px;">
     <button id="restart_btn">save and restart</button>
+    <button id="panic_btn" style="background: #ff3b30; color: #fff; border-color: #d32f2f;">wipe profile</button>
 </div>
 
 </div>
@@ -225,6 +268,80 @@ fetch('/api/settings').then(r => r.json()).then(prefs => {
             ? prefs[pref] === parseInt(t.dataset.on)
             : t.dataset.invert === 'true' ? !prefs[pref] : prefs[pref];
     });
+
+    const fpToggle = document.getElementById('fp_toggle');
+    const fpLevel = document.getElementById('fp_level');
+    
+    const fpp = prefs['privacy.fingerprintingProtection'];
+    const rfp = prefs['privacy.resistFingerprinting'];
+    
+    fpToggle.checked = fpp || rfp;
+    fpLevel.style.display = fpToggle.checked ? 'block' : 'none';
+    fpLevel.value = rfp ? 'aggressive' : 'standard';
+    
+    function updateFp() {
+        fpLevel.style.display = fpToggle.checked ? 'block' : 'none';
+        const isAggressive = fpToggle.checked && fpLevel.value === 'aggressive';
+        
+        fetch('/api/settings', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({pref: 'privacy.fingerprintingProtection', value: fpToggle.checked})
+        });
+        fetch('/api/settings', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({pref: 'privacy.resistFingerprinting', value: isAggressive})
+        });
+    }
+    
+    fpToggle.addEventListener('change', updateFp);
+    fpLevel.addEventListener('change', updateFp);
+
+    const dnsToggle = document.getElementById('dns_toggle');
+    const dnsProvider = document.getElementById('dns_provider');
+    
+    const dnsMode = prefs['network.trr.mode'];
+    const dnsUri = prefs['network.trr.uri'] || prefs['network.trr.custom_uri'] || "https://adblock.dns.mullvad.net/dns-query";
+    
+    dnsToggle.checked = dnsMode === 3;
+    dnsProvider.style.display = dnsToggle.checked ? 'block' : 'none';
+    
+    let optionFound = false;
+    for (let opt of dnsProvider.options) {
+        if (opt.value === dnsUri) {
+            dnsProvider.value = dnsUri;
+            optionFound = true;
+            break;
+        }
+    }
+    if (!optionFound) dnsProvider.value = "https://adblock.dns.mullvad.net/dns-query";
+
+    function updateDns() {
+        dnsProvider.style.display = dnsToggle.checked ? 'block' : 'none';
+        
+        fetch('/api/settings', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({pref: 'network.trr.mode', value: dnsToggle.checked ? 3 : 0})
+        });
+        
+        if (dnsToggle.checked) {
+            fetch('/api/settings', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({pref: 'network.trr.uri', value: dnsProvider.value})
+            });
+            fetch('/api/settings', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({pref: 'network.trr.custom_uri', value: dnsProvider.value})
+            });
+        }
+    }
+
+    dnsToggle.addEventListener('change', updateDns);
+    dnsProvider.addEventListener('change', updateDns);
 });
 
 toggles.forEach(t => {
@@ -271,6 +388,14 @@ document.getElementById('restart_btn').addEventListener('click', function() {
     this.textContent = 'restarting...';
     this.disabled = true;
     fetch('/api/restart', {method: 'POST'});
+});
+
+document.getElementById('panic_btn').addEventListener('click', function() {
+    if(!confirm("are you sure? this will instantly kill firefox and wipe all history, cookies, and local data. your settings will be kept.")) return;
+    this.textContent = 'wiping...';
+    this.disabled = true;
+    document.getElementById('restart_btn').disabled = true;
+    fetch('/api/panic', {method: 'POST'});
 });
 </script>
 

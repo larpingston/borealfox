@@ -74,6 +74,14 @@ if [ -f "$REPO_DIR/patches/logo.png" ]; then
   cp "$REPO_DIR/patches/logo.png" "$PROFILE_DIR/chrome/logo.png"
 fi
 
+echo "installing extensions..."
+mkdir -p "$PROFILE_DIR/extensions"
+curl -sL "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi" -o "$PROFILE_DIR/extensions/uBlock0@raymondhill.net.xpi"
+curl -sL "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi" -o "$PROFILE_DIR/extensions/{d7742d87-e61d-4b78-b8a1-b469842139fa}.xpi"
+curl -sL "https://addons.mozilla.org/firefox/downloads/latest/localcdn-fork-of-decentraleyes/latest.xpi" -o "$PROFILE_DIR/extensions/{b86e4813-687a-43e6-ab65-0bde4ab75758}.xpi"
+curl -sL "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi" -o "$PROFILE_DIR/extensions/addon@darkreader.org.xpi"
+curl -sL "https://addons.mozilla.org/firefox/downloads/latest/matte-black-v1/latest.xpi" -o "$PROFILE_DIR/extensions/{f2b832a9-f0f5-4532-934c-74b25eb23fb9}.xpi"
+
 echo "installing policies.json..."
 sudo mkdir -p "$FIREFOX_DIR/distribution"
 sudo cp "$REPO_DIR/distribution/policies.json" "$FIREFOX_DIR/distribution/policies.json"

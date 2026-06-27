@@ -2,12 +2,11 @@
 
 ## what it does?
 
-hardened firefox settings with telemetry and data collection removed
-forces https everywhere
-routes dns thru mullvads adblocking resolver
-installs ublock origin, vimium, localCDN and dark reader addons
-disables the mozilla nonsense: pocket, firefox accounts, ai , etc
-clean minimal userChrome.css
+- hardened firefox settings with telemetry and data collection removed
+- routes dns thru mullvads adblocking resolver
+- installs ublock origin, vimium, localCDN and dark reader addons
+- disables the mozilla nonsense: pocket, firefox accounts, ai , etc
+- clean minimal userChrome.css
 
 ## installation
 
